@@ -14,9 +14,9 @@
     <title>Küchendienst</title>
     <style>
         :root {
-            --color-beige-50: rgba(240, 237, 232, 1);
-            --color-beige-100: rgba(235, 231, 224, 1);
-            --color-beige-200: rgba(225, 220, 212, 1);
+            --color-beige-50: rgba(245, 242, 237, 1);
+            --color-beige-100: rgba(242, 238, 230, 1);
+            --color-beige-200: rgba(235, 230, 220, 1);
             --color-sage-400: rgba(130, 147, 135, 1);
             --color-sage-500: rgba(106, 124, 111, 1);
             --color-sage-600: rgba(88, 105, 93, 1);
@@ -805,7 +805,7 @@
     </style>
 </head>
 <body>
-    <div class="version-badge">2.18.26</div>
+    <div class="version-badge">Version: 1.0.0</div>
     
     <div class="container">
         <h1>Küchendienst</h1>
@@ -820,8 +820,8 @@
                     <span class="menu-title">Menü</span>
                     <button class="menu-close" onclick="closeMenu()">&times;</button>
                 </div>
-                <button class="tab active" data-tab="personen" data-label="Personen">👥 Personen</button>
-                <button class="tab" data-tab="betreuer" data-label="Betreuer">👨‍🏫 Betreuer</button>
+                <button class="tab active" data-tab="personen" data-label="Teilnehmende">👥 Teilnehmende</button>
+                <button class="tab" data-tab="betreuer" data-label="Betreuende">👨‍🏫 Betreuende</button>
                 <button class="tab" data-tab="strafdienste" data-label="Strafdienste">⚠️ Strafdienste</button>
                 <button class="tab" data-tab="einteilung" data-label="Einteilung">📋 Einteilung</button>
                 <button class="tab" data-tab="uebersicht" data-label="Übersicht">📊 Übersicht</button>
@@ -833,12 +833,12 @@
         <!-- Personen Tab -->
         <div class="tab-content active" id="personen">
             <div class="card">
-                <h2>Teilnehmer verwalten</h2>
+                <h2>Teilnehmende verwalten</h2>
                 <div class="form-group">
-                    <label for="person-name">Name der Person</label>
+                    <label for="person-name">Name</label>
                     <div class="flex-row">
                         <input type="text" id="person-name" placeholder="Name eingeben">
-                        <button class="btn btn-primary" onclick="addPerson()">Teilnehmer hinzufügen</button>
+                        <button class="btn btn-primary" onclick="addPerson()">Person hinzufügen</button>
                     </div>
                 </div>
                 <div id="person-list" class="person-list"></div>
@@ -848,12 +848,12 @@
         <!-- Betreuer Tab -->
         <div class="tab-content" id="betreuer">
             <div class="card">
-                <h2>Betreuer verwalten</h2>
+                <h2>Betreuende verwalten</h2>
                 <div class="form-group">
-                    <label for="supervisor-name">Name des Betreuers</label>
+                    <label for="supervisor-name">Name</label>
                     <div class="flex-row">
                         <input type="text" id="supervisor-name" placeholder="Name eingeben">
-                        <button class="btn btn-primary" onclick="addSupervisor()">Betreuer hinzufügen</button>
+                        <button class="btn btn-primary" onclick="addSupervisor()">Betreuende Person hinzufügen</button>
                     </div>
                 </div>
                 <div id="supervisor-list" class="person-list"></div>
@@ -865,7 +865,7 @@
             <div class="card">
                 <h2>Strafdienste vormerken</h2>
                 <div class="form-group">
-                    <label for="penalty-person">Person auswählen</label>
+                    <label for="penalty-person">Teilnehmende Person auswählen</label>
                     <select id="penalty-person">
                         <option value="">-- Person wählen --</option>
                     </select>
@@ -907,7 +907,7 @@
                 </div>
 
                 <div id="supervisor-notice" style="display: none; padding: var(--space-12); background: var(--color-secondary); border-radius: var(--radius-base); margin-bottom: var(--space-16); font-size: var(--font-size-sm);">
-                    ℹ️ Ein Betreuer wird automatisch fair ausgewählt
+                    ℹ️ Eine betreuende Person wird automatisch fair ausgewählt
                 </div>
 
                 <button class="btn btn-primary" onclick="assignTask()">Dienst zuweisen</button>
@@ -934,11 +934,11 @@
         <!-- Statistik Tab -->
         <div class="tab-content" id="statistik">
             <div class="card">
-                <h2>Statistiken - Teilnehmer</h2>
+                <h2>Statistiken - Teilnehmende</h2>
                 <div id="stats-content" class="stats-grid"></div>
             </div>
             <div class="card">
-                <h2>Statistiken - Betreuer</h2>
+                <h2>Statistiken - Betreuende</h2>
                 <div id="supervisor-stats-content" class="stats-grid"></div>
             </div>
         </div>
@@ -948,7 +948,7 @@
             <div class="card">
                 <h2>Einstellungen</h2>
                 <div class="form-group">
-                    <label for="max-tasks-per-day">Maximale Dienste pro Person/Tag</label>
+                    <label for="max-tasks-per-day">Maximale Dienste pro Person und Tag</label>
                     <input type="number" id="max-tasks-per-day" min="1" max="10" value="3">
                     <small style="color: var(--color-text-secondary); display: block; margin-top: var(--space-4);">
                         Verhindert, dass eine Person mehr als diese Anzahl Dienste an einem Tag zugeteilt bekommt
@@ -1061,7 +1061,7 @@
                 isAdmin = true;
                 document.querySelector('[style*="z-index: 10000"]').remove();
                 loadData();
-                showToast('👑', 'Als Administrator angemeldet', 'success');
+                showToast('👑', 'Als Admin angemeldet', 'success');
             } else {
                 errorDiv.textContent = 'Falsches Passwort';
                 errorDiv.style.display = 'block';
@@ -1162,9 +1162,9 @@
                     <div class="card" id="admin-controls" style="border: 2px solid var(--color-warning);">
                         <h2>👑 Administrator-Funktionen</h2>
                         <p style="margin-bottom: var(--space-16); color: var(--color-text-secondary);">
-                            Sie sind als Administrator angemeldet
+                            Sie sind als Admin angemeldet
                         </p>
-                        <button class="btn btn-secondary" onclick="window.changePassword()">Benutzer-Passwort ändern</button>
+                        <button class="btn btn-secondary" onclick="window.changePassword()">Nutzer-Passwort ändern</button>
                         <button class="btn btn-secondary" onclick="window.changeAdminPassword()" style="margin-left: var(--space-8);">Admin-Passwort ändern</button>
                         <button class="btn btn-secondary" onclick="window.logout()" style="margin-left: var(--space-8);">Abmelden</button>
                     </div>
@@ -1174,18 +1174,18 @@
         }
 
         window.changePassword = async function() {
-            const newPassword = prompt('Neues Benutzer-Passwort eingeben:');
+            const newPassword = prompt('Neues Nutzer-Passwort eingeben:');
             if (newPassword && newPassword.trim()) {
                 const newHash = await hashPassword(newPassword.trim());
                 const passwordRef = ref(database, 'kuechendienst/config/userPasswordHash');
                 await set(passwordRef, newHash);
                 userPasswordHash = newHash;
-                showToast('✓', 'Benutzer-Passwort geändert', 'success');
+                showToast('✓', 'Nutzer-Passwort geändert', 'success');
             }
         };
 
         window.changeAdminPassword = async function() {
-            const newPassword = prompt('Neues Administrator-Passwort eingeben:');
+            const newPassword = prompt('Neues Admin-Passwort eingeben:');
             if (newPassword && newPassword.trim()) {
                 const newHash = await hashPassword(newPassword.trim());
                 const passwordRef = ref(database, 'kuechendienst/config/adminPasswordHash');
@@ -1225,7 +1225,7 @@
             renderPeople();
             updatePenaltyPersonSelect();
             saveData();
-            showToast('✓', `${name} wurde als Teilnehmer hinzugefügt`, 'success');
+            showToast('✓', `${name} wurde hinzugefügt`, 'success');
         }
 
         function editPerson(oldName) {
@@ -1272,7 +1272,7 @@
             const container = document.getElementById('person-list');
             
             if (people.length === 0) {
-                container.innerHTML = '<div class="empty-state">Noch keine Teilnehmer hinzugefügt</div>';
+                container.innerHTML = '<div class="empty-state">Noch keine Teilnehmenden hinzugefügt</div>';
                 return;
             }
 
@@ -1307,7 +1307,7 @@
             nameInput.value = '';
             renderSupervisors();
             saveData();
-            showToast('✓', `${name} wurde als Betreuer hinzugefügt`, 'success');
+            showToast('✓', `${name} wurde als betreuende Person hinzugefügt`, 'success');
         }
 
         function editSupervisor(oldName) {
@@ -1346,7 +1346,7 @@
             const container = document.getElementById('supervisor-list');
             
             if (supervisors.length === 0) {
-                container.innerHTML = '<div class="empty-state">Noch keine Betreuer hinzugefügt</div>';
+                container.innerHTML = '<div class="empty-state">Noch keine Betreuenden hinzugefügt</div>';
                 return;
             }
 
@@ -1440,7 +1440,7 @@
 
         function assignTask() {
             if (people.length === 0) {
-                alert('Bitte erst Teilnehmer hinzufügen');
+                alert('Bitte erst Teilnehmende hinzufügen');
                 return;
             }
 
@@ -1471,7 +1471,7 @@
             if (taskType === 'putzen') {
                 const supervisor = selectSupervisor(today);
                 if (!supervisor) {
-                    alert('Kein Betreuer verfügbar. Bitte erst Betreuer hinzufügen.');
+                    alert('Keine betreuende Person verfügbar. Bitte erst betreuende Person hinzufügen.');
                     return;
                 }
                 assignment.supervisor = supervisor.name;
@@ -1492,7 +1492,7 @@
             
             let message = `${selectedPeople.map(p => p.name).join(', ')}`;
             if (assignment.supervisor) {
-                message += ` • Betreuer: ${assignment.supervisor}`;
+                message += ` • Betreuung: ${assignment.supervisor}`;
             }
             showToast('✓', `Dienst zugewiesen: ${message}`, 'success');
         }
@@ -1618,7 +1618,7 @@
                             </div>
                             ${assignment.supervisor ? `
                                 <div style="margin-top: var(--space-8); font-size: var(--font-size-sm); color: var(--color-text-secondary);">
-                                    👤 Betreuer: ${assignment.supervisor}
+                                    👤 Betreuung: ${assignment.supervisor}
                                 </div>
                             ` : ''}
                         </div>
@@ -1667,7 +1667,7 @@
             const supervisorContainer = document.getElementById('supervisor-stats-content');
 
             if (supervisors.length === 0) {
-                supervisorContainer.innerHTML = '<div class="empty-state">Keine Betreuer-Statistiken verfügbar</div>';
+                supervisorContainer.innerHTML = '<div class="empty-state">Keine Statistiken verfügbar</div>';
                 return;
             }
 
@@ -1801,7 +1801,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCode = `
-                    const CACHE_NAME = 'kuechendienst-v2-18-26';
+                    const CACHE_NAME = 'kuechendienst-v1-0-0';
                     const urlsToCache = ['./', 'index.html'];
                     
                     self.addEventListener('install', event => {
