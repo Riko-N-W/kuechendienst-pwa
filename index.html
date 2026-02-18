@@ -956,37 +956,145 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+        import { getDatabase, ref, onValue, set, get } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js';
+
+        const firebaseConfig = {
+            apiKey: "HIER_IHREN_API_KEY_EINFUEGEN",
+            authDomain: "HIER_IHRE_AUTH_DOMAIN_EINFUEGEN",
+            databaseURL: "HIER_IHRE_DATABASE_URL_EINFUEGEN",
+            projectId: "HIER_IHRE_PROJECT_ID_EINFUEGEN",
+            storageBucket: "HIER_IHREN_STORAGE_BUCKET_EINFUEGEN",
+            messagingSenderId: "HIER_IHRE_SENDER_ID_EINFUEGEN",
+            appId: "HIER_IHRE_APP_ID_EINFUEGEN"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
         let people = [];
         let supervisors = [];
         let assignments = [];
         let penalties = [];
         let settings = { maxTasksPerDay: 3 };
+        let isAuthenticated = false;
+        let isAdmin = false;
+
+        function checkAuth() {
+            const authStatus = sessionStorage.getItem('auth');
+            const adminStatus = sessionStorage.getItem('admin');
+            isAuthenticated = authStatus === 'true';
+            isAdmin = adminStatus === 'true';
+            
+            if (!isAuthenticated) {
+                showLoginScreen();
+                return false;
+            }
+            return true;
+        }
+
+        function showLoginScreen() {
+            const loginHTML = `
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, var(--color-beige-50) 0%, var(--color-beige-100) 100%); display: flex; align-items: center; justify-content: center; z-index: 10000;">
+                    <div class="card" style="max-width: 400px; width: 90%; text-align: center;">
+                        <h2 style="margin-bottom: var(--space-24);">🔒 Küchendienst</h2>
+                        <p style="margin-bottom: var(--space-24); color: var(--color-text-secondary);">Bitte geben Sie das Passwort ein</p>
+                        <input type="password" id="login-password" placeholder="Passwort eingeben" style="margin-bottom: var(--space-16);" onkeypress="if(event.key==='Enter') window.attemptLogin()">
+                        <button class="btn btn-primary" style="width: 100%;" onclick="window.attemptLogin()">Anmelden</button>
+                        <div id="login-error" style="color: var(--color-error); margin-top: var(--space-12); font-size: var(--font-size-sm); display: none;">Falsches Passwort</div>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', loginHTML);
+            document.getElementById('login-password').focus();
+        }
+
+        window.attemptLogin = function() {
+            const password = document.getElementById('login-password').value;
+            const errorDiv = document.getElementById('login-error');
+            
+            if (password === '1952') {
+                sessionStorage.setItem('auth', 'true');
+                isAuthenticated = true;
+                document.querySelector('[style*="z-index: 10000"]').remove();
+                loadData();
+            } else if (password === '03051999') {
+                sessionStorage.setItem('auth', 'true');
+                sessionStorage.setItem('admin', 'true');
+                isAuthenticated = true;
+                isAdmin = true;
+                document.querySelector('[style*="z-index: 10000"]').remove();
+                loadData();
+                showToast('👑', 'Als Administrator angemeldet', 'success');
+            } else {
+                errorDiv.style.display = 'block';
+                document.getElementById('login-password').value = '';
+                document.getElementById('login-password').focus();
+            }
+        };
 
         function loadData() {
-            const savedPeople = JSON.parse(window.localStorage?.getItem('people') || '[]');
-            const savedSupervisors = JSON.parse(window.localStorage?.getItem('supervisors') || '[]');
-            const savedAssignments = JSON.parse(window.localStorage?.getItem('assignments') || '[]');
-            const savedPenalties = JSON.parse(window.localStorage?.getItem('penalties') || '[]');
-            const savedSettings = JSON.parse(window.localStorage?.getItem('settings') || '{"maxTasksPerDay":3}');
+            if (!checkAuth()) return;
             
-            people = savedPeople;
-            supervisors = savedSupervisors;
-            assignments = savedAssignments;
-            penalties = savedPenalties;
-            settings = savedSettings;
-            
-            document.getElementById('max-tasks-per-day').value = settings.maxTasksPerDay;
-            
-            renderPeople();
-            renderSupervisors();
-            renderPenalties();
-            renderOverview();
-            renderStats();
-            updatePenaltyPersonSelect();
+            const dataRef = ref(database, 'kuechendienst');
+            onValue(dataRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    people = data.people || [];
+                    supervisors = data.supervisors || [];
+                    assignments = data.assignments || [];
+                    penalties = data.penalties || [];
+                    settings = data.settings || { maxTasksPerDay: 3 };
+                } else {
+                    const savedPeople = JSON.parse(window.localStorage?.getItem('people') || '[]');
+                    const savedSupervisors = JSON.parse(window.localStorage?.getItem('supervisors') || '[]');
+                    const savedAssignments = JSON.parse(window.localStorage?.getItem('assignments') || '[]');
+                    const savedPenalties = JSON.parse(window.localStorage?.getItem('penalties') || '[]');
+                    const savedSettings = JSON.parse(window.localStorage?.getItem('settings') || '{"maxTasksPerDay":3}');
+                    
+                    people = savedPeople;
+                    supervisors = savedSupervisors;
+                    assignments = savedAssignments;
+                    penalties = savedPenalties;
+                    settings = savedSettings;
+                    
+                    if (people.length > 0 || supervisors.length > 0 || assignments.length > 0) {
+                        saveData();
+                    }
+                }
+                
+                document.getElementById('max-tasks-per-day').value = settings.maxTasksPerDay;
+                
+                renderPeople();
+                renderSupervisors();
+                renderPenalties();
+                renderOverview();
+                renderStats();
+                updatePenaltyPersonSelect();
+                
+                if (isAdmin) {
+                    addAdminControls();
+                }
+            });
         }
 
         function saveData() {
+            if (!isAuthenticated) return;
+            
+            const dataRef = ref(database, 'kuechendienst');
+            set(dataRef, {
+                people: people,
+                supervisors: supervisors,
+                assignments: assignments,
+                penalties: penalties,
+                settings: settings,
+                lastUpdated: new Date().toISOString()
+            }).catch(error => {
+                console.error('Fehler beim Speichern:', error);
+                showToast('⚠️', 'Fehler beim Synchronisieren', 'error');
+            });
+            
             try {
                 window.localStorage?.setItem('people', JSON.stringify(people));
                 window.localStorage?.setItem('supervisors', JSON.stringify(supervisors));
@@ -994,9 +1102,51 @@
                 window.localStorage?.setItem('penalties', JSON.stringify(penalties));
                 window.localStorage?.setItem('settings', JSON.stringify(settings));
             } catch (e) {
-                console.log('Data saved in memory only');
+                console.log('Lokale Sicherung fehlgeschlagen');
             }
         }
+
+        function addAdminControls() {
+            const settingsCard = document.querySelector('#einstellungen .card:last-child');
+            if (settingsCard && !document.getElementById('admin-controls')) {
+                const adminHTML = `
+                    <div class="card" id="admin-controls" style="border: 2px solid var(--color-warning);">
+                        <h2>👑 Administrator-Funktionen</h2>
+                        <p style="margin-bottom: var(--space-16); color: var(--color-text-secondary);">
+                            Sie sind als Administrator angemeldet
+                        </p>
+                        <button class="btn btn-secondary" onclick="window.changePassword()">Benutzer-Passwort ändern</button>
+                        <button class="btn btn-secondary" onclick="window.changeAdminPassword()" style="margin-left: var(--space-8);">Admin-Passwort ändern</button>
+                        <button class="btn btn-secondary" onclick="window.logout()" style="margin-left: var(--space-8);">Abmelden</button>
+                    </div>
+                `;
+                settingsCard.insertAdjacentHTML('afterend', adminHTML);
+            }
+        }
+
+        window.changePassword = function() {
+            const newPassword = prompt('Neues Benutzer-Passwort eingeben:');
+            if (newPassword && newPassword.trim()) {
+                const passwordRef = ref(database, 'kuechendienst/config/userPassword');
+                set(passwordRef, newPassword.trim());
+                showToast('✓', 'Benutzer-Passwort geändert', 'success');
+            }
+        };
+
+        window.changeAdminPassword = function() {
+            const newPassword = prompt('Neues Administrator-Passwort eingeben:');
+            if (newPassword && newPassword.trim()) {
+                const passwordRef = ref(database, 'kuechendienst/config/adminPassword');
+                set(passwordRef, newPassword.trim());
+                showToast('✓', 'Admin-Passwort geändert', 'success');
+            }
+        };
+
+        window.logout = function() {
+            sessionStorage.removeItem('auth');
+            sessionStorage.removeItem('admin');
+            location.reload();
+        };
 
         function addPerson() {
             const nameInput = document.getElementById('person-name');
@@ -1589,8 +1739,11 @@
             }
         });
 
-        loadData();
-        updateTaskTypeUI();
+        checkAuth();
+        if (isAuthenticated) {
+            loadData();
+            updateTaskTypeUI();
+        }
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
