@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6A7C6F">
+    <meta name="description" content="Küchendienst Rotations-App mit fairer Verteilung">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Küchendienst">
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkvDvGNoZW5kaWVuc3QiLAogICJzaG9ydF9uYW1lIjogIkvDvGNoZSIsCiAgImRlc2NyaXB0aW9uIjogIkvDvGNoZW5kaWVuc3QgUm90YXRpb25zIEFwcCIsCiAgInN0YXJ0X3VybCI6ICIuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjRkFGOEY1IiwKICAidGhlbWVfY29sb3IiOiAiIzZBN0M2RiIsCiAgIm9yaWVudGF0aW9uIjogInBvcnRyYWl0IiwKICAiaWNvbnMiOiBbCiAgICB7CiAgICAgICJzcmMiOiAiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyUyMHhtbG5zJTNEJTI3aHR0cCUzQSUyRiUyRnd3dy53My5vcmclMkYyMDAwJTJGc3ZnJTI3JTIwd2lkdGglM0QlMjcxOTIlMjclMjBoZWlnaHQlM0QlMjcxOTIlMjclM0UlM0NkZWZzJTNFJTNDbGluZWFyR3JhZGllbnQlMjBpZCUzRCUyN2dyYWQlMjclMjB4MSUzRCUyNzAlMjUlMjclMjB5MSUzRCUyNzAlMjUlMjclMjB4MiUzRCUyNzEwMCUyNSUyNyUyMHkyJTNEJTI3MTAwJTI1JTI3JTNFJTNDc3RvcCUyMG9mZnNldCUzRCUyNzAlMjUlMjclMjBzdHlsZSUzRCUyN3N0b3AtY29sb3IlM0ElMjM2QTdDNkYlM0JzdG9wLW9wYWNpdHklM0ExJTI3JTJGJTNFJTNDc3RvcCUyMG9mZnNldCUzRCUyNzEwMCUyNSUyNyUyMHN0eWxlJTNEJTI3c3RvcC1jb2xvciUzQSUyMzg4QUE5MyUzQnN0b3Atb3BhY2l0eSUzQTElMjclMkYlM0UlM0MlMkZsaW5lYXJHcmFkaWVudCUzRSUzQyUyRmRlZnMlM0UlM0NyZWN0JTIwd2lkdGglM0QlMjcxOTIlMjclMjBoZWlnaHQlM0QlMjcxOTIlMjclMjBmaWxsJTNEJTI3dXJsJTI4JTIzZ3JhZCUyOSUyNyUyMHJ4JTNEJTI3NDIlMjclMkYlM0UlM0N0ZXh0JTIweCUzRCUyNzUwJTI1JTI3JTIweSUzRCUyNzQ1JTI1JTI3JTIwZG9taW5hbnQtYmFzZWxpbmUlM0QlMjdtaWRkbGUlMjclMjB0ZXh0LWFuY2hvciUzRCUyN21pZGRsZSUyNyUyMGZvbnQtc2l6ZSUzRCUyNzUyJTI3JTIwZmlsbCUzRCUyNyUyM0ZBRjhGNSUyNyUyMGZvbnQtZmFtaWx5JTNEJTI3LWFwcGxlLXN5c3RlbSUyQyUyMEJsaW5rTWFjU3lzdGVtRm9udCUyQyUyMHNhbnMtc2VyaWYlMjclMjBmb250LXdlaWdodCUzRCUyNzcwMCUyNyUyMGxldHRlci1zcGFjaW5nJTNEJTI3LTElMjclM0VTbyUzQyUyRnRleHQlM0UlM0N0ZXh0JTIweCUzRCUyNzUwJTI1JTI3JTIweSUzRCUyNzY1JTI1JTI3JTIwZG9taW5hbnQtYmFzZWxpbmUlM0QlMjdtaWRkbGUlMjclMjB0ZXh0LWFuY2hvciUzRCUyN21pZGRsZSUyNyUyMGZvbnQtc2l6ZSUzRCUyNzUyJTI3JTIwZmlsbCUzRCUyNyUyM0ZBRjhGNSUyNyUyMGZvbnQtZmFtaWx5JTNEJTI3LWFwcGxlLXN5c3RlbSUyQyUyMEJsaW5rTWFjU3lzdGVtRm9udCUyQyUyMHNhbnMtc2VyaWYlMjclMjBmb250LXdlaWdodCUzRCUyNzcwMCUyNyUyMGxldHRlci1zcGFjaW5nJTNEJTI3LTElMjclM0VGYSUzQyUyRnRleHQlM0UlM0MlMkZzdmclM0UiLAogICAgICAic2l6ZXMiOiAiMTkyeDE5MiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiLAogICAgICAicHVycG9zZSI6ICJhbnkgbWFza2FibGUiCiAgICB9LAogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmclMjB4bWxucyUzRCUyN2h0dHAlM0ElMkYlMkZ3d3cudzMub3JnJTJGMjAwMCUyRnN2ZyUyNyUyMHdpZHRoJTNEJTI3NTEyJTI3JTIwaGVpZ2h0JTNEJTI3NTEyJTI3JTNFJTNDZGVmcyUzRSUzQ2xpbmVhckdyYWRpZW50JTIwaWQlM0QlMjdncmFkJTI3JTIweDElM0QlMjcwJTI1JTI3JTIweTElM0QlMjcwJTI1JTI3JTIweDIlM0QlMjcxMDAlMjUlMjclMjB5MiUzRCUyNzEwMCUyNSUyNyUzRSUzQ3N0b3AlMjBvZmZzZXQlM0QlMjcwJTI1JTI3JTIwc3R5bGUlM0QlMjdzdG9wLWNvbG9yJTNBJTIzNkE3QzZGJTNCc3RvcC1vcGFjaXR5JTNBMSUyNyUyRiUzRSUzQ3N0b3AlMjBvZmZzZXQlM0QlMjcxMDAlMjUlMjclMjBzdHlsZSUzRCUyN3N0b3AtY29sb3IlM0ElMjM4OEFBOTMlM0JzdG9wLW9wYWNpdHklM0ExJTI3JTJGJTNFJTNDJTJGbGluZWFyR3JhZGllbnQlM0UlM0MlMkZkZWZzJTNFJTNDcmVjdCUyMHdpZHRoJTNEJTI3NTEyJTI3JTIwaGVpZ2h0JTNEJTI3NTEyJTI3JTIwZmlsbCUzRCUyN3VybCUyOCUyM2dyYWQlMjklMjclMjByeCUzRCUyNzEwMCUyNyUyRiUzRSUzQ3RleHQlMjB4JTNEJTI3NTAlMjUlMjclMjB5JTNEJTI3NDUlMjUlMjclMjBkb21pbmFudC1iYXNlbGluZSUzRCUyN21pZGRsZSUyNyUyMHRleHQtYW5jaG9yJTNEJTI3bWlkZGxlJTI3JTIwZm9udC1zaXplJTNEJTI3MTQwJTI3JTIwZmlsbCUzRCUyNyUyM0ZBRjhGNSUyNyUyMGZvbnQtZmFtaWx5JTNEJTI3LWFwcGxlLXN5c3RlbSUyQyUyMEJsaW5rTWFjU3lzdGVtRm9udCUyQyUyMHNhbnMtc2VyaWYlMjclMjBmb250LXdlaWdodCUzRCUyNzcwMCUyNyUyMGxldHRlci1zcGFjaW5nJTNEJTI3LTIlMjclM0VTbyUzQyUyRnRleHQlM0UlM0N0ZXh0JTIweCUzRCUyNzUwJTI1JTI3JTIweSUzRCUyNzY1JTI1JTI3JTIwZG9taW5hbnQtYmFzZWxpbmUlM0QlMjdtaWRkbGUlMjclMjB0ZXh0LWFuY2hvciUzRCUyN21pZGRsZSUyNyUyMGZvbnQtc2l6ZSUzRCUyNzE0MCUyNyUyMGZpbGwlM0QlMjclMjNGQUY4RjUlMjclMjBmb250LWZhbWlseSUzRCUyNy1hcHBsZS1zeXN0ZW0lMkMlMjBCbGlua01hY1N5c3RlbUZvbnQlMkMlMjBzYW5zLXNlcmlmJTI3JTIwZm9udC13ZWlnaHQlM0QlMjc3MDAlMjclMjBsZXR0ZXItc3BhY2luZyUzRCUyNy0yJTI3JTNFRmElM0MlMkZ0ZXh0JTNFJTNDJTJGc3ZnJTNFIiwKICAgICAgInNpemVzIjogIjUxMng1MTIiLAogICAgICAidHlwZSI6ICJpbWFnZS9zdmcreG1sIiwKICAgICAgInB1cnBvc2UiOiAiYW55IG1hc2thYmxlIgogICAgfQogIF0KfQ==">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%236A7C6F;stop-opacity:1'/%3E%3Cstop offset='100%25' style='stop-color:%2388AA93;stop-opacity:1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='192' height='192' fill='url(%23grad)' rx='42'/%3E%3Ctext x='50%25' y='45%25' dominant-baseline='middle' text-anchor='middle' font-size='52' fill='%23FAF8F5' font-family='-apple-system, BlinkMacSystemFont, sans-serif' font-weight='700' letter-spacing='-1'%3ESo%3C/text%3E%3Ctext x='50%25' y='65%25' dominant-baseline='middle' text-anchor='middle' font-size='52' fill='%23FAF8F5' font-family='-apple-system, BlinkMacSystemFont, sans-serif' font-weight='700' letter-spacing='-1'%3EFa%3C/text%3E%3C/svg%3E">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%236A7C6F;stop-opacity:1'/%3E%3Cstop offset='100%25' style='stop-color:%2388AA93;stop-opacity:1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='192' height='192' fill='url(%23grad)' rx='42'/%3E%3Ctext x='50%25' y='45%25' dominant-baseline='middle' text-anchor='middle' font-size='52' fill='%23FAF8F5' font-family='-apple-system, BlinkMacSystemFont, sans-serif' font-weight='700' letter-spacing='-1'%3ESo%3C/text%3E%3Ctext x='50%25' y='65%25' dominant-baseline='middle' text-anchor='middle' font-size='52' fill='%23FAF8F5' font-family='-apple-system, BlinkMacSystemFont, sans-serif' font-weight='700' letter-spacing='-1'%3EFa%3C/text%3E%3C/svg%3E">
+    <title>Küchendienst</title>
+    <style>
+        :root {
+            --color-beige-50: rgba(250, 248, 245, 1);
+            --color-beige-100: rgba(245, 242, 237, 1);
+            --color-beige-200: rgba(235, 230, 222, 1);
+            --color-sage-400: rgba(130, 147, 135, 1);
+            --color-sage-500: rgba(106, 124, 111, 1);
+            --color-sage-600: rgba(88, 105, 93, 1);
+            --color-sage-700: rgba(70, 84, 75, 1);
+            --color-text-dark: rgba(60, 60, 60, 1);
+            --color-text-light: rgba(100, 100, 100, 1);
+            --color-sage-500-rgb: 106, 124, 111;
+            --color-red-400: rgba(255, 84, 89, 1);
+            --color-red-500: rgba(192, 21, 47, 1);
+            --color-orange-400: rgba(230, 129, 97, 1);
+            
+            --color-background: var(--color-beige-50);
+            --color-surface: rgba(255, 255, 255, 0.7);
+            --color-text: var(--color-text-dark);
+            --color-text-secondary: var(--color-text-light);
+            --color-primary: var(--color-sage-500);
+            --color-primary-hover: var(--color-sage-600);
+            --color-primary-active: var(--color-sage-700);
+            --color-secondary: rgba(var(--color-sage-500-rgb), 0.1);
+            --color-secondary-hover: rgba(var(--color-sage-500-rgb), 0.15);
+            --color-secondary-active: rgba(var(--color-sage-500-rgb), 0.2);
+            --color-border: rgba(var(--color-sage-500-rgb), 0.15);
+            --color-btn-primary-text: rgba(255, 255, 255, 1);
+            --color-card-border: rgba(var(--color-sage-500-rgb), 0.1);
+            --color-error: var(--color-red-500);
+            --color-success: var(--color-sage-500);
+            --color-warning: var(--color-orange-400);
+            --color-focus-ring: rgba(var(--color-sage-500-rgb), 0.3);
+            --focus-ring: 0 0 0 3px var(--color-focus-ring);
+            --focus-outline: 2px solid var(--color-primary);
+            --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-size-xs: 11px;
+            --font-size-sm: 12px;
+            --font-size-base: 15px;
+            --font-size-lg: 17px;
+            --font-size-xl: 19px;
+            --font-size-2xl: 22px;
+            --font-size-3xl: 28px;
+            --font-size-4xl: 34px;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+            --line-height-tight: 1.2;
+            --line-height-normal: 1.5;
+            --space-4: 4px;
+            --space-6: 6px;
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-20: 20px;
+            --space-24: 24px;
+            --space-32: 32px;
+            --radius-sm: 10px;
+            --radius-base: 14px;
+            --radius-md: 16px;
+            --radius-lg: 20px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06), 0 2px 6px rgba(0, 0, 0, 0.03);
+            --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.08);
+            --duration-fast: 150ms;
+            --duration-normal: 250ms;
+            --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+            --blur-glass: blur(20px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-normal);
+            color: var(--color-text);
+            background: linear-gradient(135deg, var(--color-beige-50) 0%, var(--color-beige-100) 100%);
+            padding: var(--space-20);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-24);
+            color: var(--color-text);
+        }
+
+        h2 {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--space-16);
+            color: var(--color-text);
+        }
+
+        h3 {
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--space-12);
+            color: var(--color-text);
+        }
+
+        .tabs {
+            display: flex;
+            gap: var(--space-8);
+            margin-bottom: var(--space-24);
+            border-bottom: 1px solid var(--color-border);
+            position: relative;
+        }
+
+        .menu-toggle {
+            display: none;
+            padding: var(--space-12) var(--space-20);
+            background: var(--color-secondary);
+            border: none;
+            border-radius: var(--radius-base);
+            color: var(--color-text);
+            cursor: pointer;
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            transition: all var(--duration-normal) var(--ease-standard);
+        }
+
+        .menu-toggle:hover {
+            background: var(--color-secondary-hover);
+        }
+
+        .menu-toggle::after {
+            content: ' ▼';
+            font-size: var(--font-size-xs);
+            margin-left: var(--space-8);
+        }
+
+        .menu-toggle.open::after {
+            content: ' ▲';
+        }
+
+        .dropdown-menu {
+            display: flex;
+            gap: var(--space-8);
+        }
+
+        .dropdown-menu.open {
+            display: flex;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                width: 100%;
+            }
+
+            .dropdown-menu {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 85%;
+                max-width: 400px;
+                flex-direction: column;
+                background: var(--color-surface);
+                backdrop-filter: var(--blur-glass);
+                -webkit-backdrop-filter: var(--blur-glass);
+                border: 1px solid var(--color-border);
+                border-radius: var(--radius-lg);
+                padding: var(--space-16);
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                z-index: 1000;
+                animation: bubbleIn 0.3s var(--ease-standard);
+            }
+
+            @keyframes bubbleIn {
+                from {
+                    transform: translate(-50%, -50%) scale(0.8);
+                    opacity: 0;
+                }
+                to {
+                    transform: translate(-50%, -50%) scale(1);
+                    opacity: 1;
+                }
+            }
+
+            .dropdown-menu::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.4);
+                z-index: -1;
+            }
+
+            .dropdown-menu.open {
+                display: flex;
+            }
+
+            .tab {
+                width: 100%;
+                text-align: left;
+                border-bottom: none;
+                border-left: 3px solid transparent;
+                padding: var(--space-16) var(--space-20);
+                margin-bottom: var(--space-4);
+                border-radius: var(--radius-base);
+            }
+
+            .tab.active {
+                border-bottom: none;
+                border-left-color: var(--color-primary);
+                background: var(--color-secondary);
+            }
+
+            .tab:hover {
+                background: var(--color-secondary-hover);
+            }
+        }
+
+        .tab {
+            padding: var(--space-12) var(--space-20);
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            transition: all var(--duration-fast) var(--ease-standard);
+        }
+
+        .tab.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .tab:hover {
+            color: var(--color-primary-hover);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--color-surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-card-border);
+            box-shadow: var(--shadow-sm);
+            padding: var(--space-24);
+            margin-bottom: var(--space-20);
+        }
+
+        .form-group {
+            margin-bottom: var(--space-16);
+        }
+
+        label {
+            display: block;
+            margin-bottom: var(--space-8);
+            font-weight: var(--font-weight-medium);
+            font-size: var(--font-size-sm);
+            color: var(--color-text);
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: var(--space-8) var(--space-12);
+            font-size: var(--font-size-base);
+            color: var(--color-text);
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            transition: border-color var(--duration-fast) var(--ease-standard);
+        }
+
+        input:focus,
+        select:focus {
+            outline: var(--focus-outline);
+            border-color: var(--color-primary);
+        }
+
+        .btn {
+            padding: var(--space-8) var(--space-16);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-normal) var(--ease-standard);
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: var(--color-btn-primary-text);
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .btn-secondary {
+            background: var(--color-secondary);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-secondary-hover);
+        }
+
+        .btn-small {
+            padding: var(--space-4) var(--space-12);
+            font-size: var(--font-size-sm);
+        }
+
+        .person-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-8);
+            margin-bottom: var(--space-16);
+        }
+
+        .person-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-8);
+            padding: var(--space-6) var(--space-12);
+            background: var(--color-secondary);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-sm);
+        }
+
+        .person-tag button {
+            background: none;
+            border: none;
+            color: var(--color-error);
+            cursor: pointer;
+            font-size: var(--font-size-base);
+            padding: 0;
+            line-height: 1;
+        }
+
+        .assignment-item {
+            padding: var(--space-16);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            margin-bottom: var(--space-12);
+        }
+
+        .assignment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-12);
+        }
+
+        .assignment-type {
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-primary);
+        }
+
+        .assignment-people {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-6);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--space-16);
+        }
+
+        .stat-card {
+            padding: var(--space-16);
+            background: var(--color-secondary);
+            border-radius: var(--radius-base);
+        }
+
+        .stat-name {
+            font-weight: var(--font-weight-semibold);
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--space-8);
+            color: var(--color-text);
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-4);
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .stat-value {
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text);
+        }
+
+        .flex-row {
+            display: flex;
+            gap: var(--space-12);
+            align-items: flex-end;
+        }
+
+        .flex-row .form-group {
+            flex: 1;
+        }
+
+        .day-header {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            margin-top: var(--space-24);
+            margin-bottom: var(--space-16);
+            color: var(--color-text);
+            padding-bottom: var(--space-8);
+            border-bottom: 2px solid var(--color-border);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: var(--space-32);
+            color: var(--color-text-secondary);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: var(--space-24);
+            right: var(--space-24);
+            background: var(--color-primary);
+            color: var(--color-btn-primary-text);
+            padding: var(--space-16) var(--space-24);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: var(--space-12);
+            animation: slideIn 0.3s var(--ease-standard);
+            z-index: 1000;
+            max-width: 400px;
+        }
+
+        .toast.success {
+            background: var(--color-success);
+        }
+
+        .toast.error {
+            background: var(--color-error);
+        }
+
+        .toast-icon {
+            font-size: var(--font-size-2xl);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        .card {
+            background: var(--color-surface);
+            backdrop-filter: var(--blur-glass);
+            -webkit-backdrop-filter: var(--blur-glass);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--color-border);
+            box-shadow: var(--shadow-glass);
+            padding: var(--space-24);
+            margin-bottom: var(--space-20);
+            transition: all var(--duration-normal) var(--ease-standard);
+        }
+
+        .card:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn {
+            padding: var(--space-8) var(--space-16);
+            border-radius: var(--radius-base);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--duration-normal) var(--ease-standard);
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .person-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-8);
+            padding: var(--space-8) var(--space-16);
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: var(--blur-glass);
+            -webkit-backdrop-filter: var(--blur-glass);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-sm);
+            transition: all var(--duration-normal) var(--ease-standard);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .person-tag:hover {
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: var(--shadow-md);
+        }
+
+        .assignment-item {
+            padding: var(--space-20);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-12);
+            background: var(--color-surface);
+            transition: all var(--duration-normal) var(--ease-standard);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .assignment-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-card {
+            padding: var(--space-20);
+            background: var(--color-secondary);
+            border-radius: var(--radius-lg);
+            transition: all var(--duration-normal) var(--ease-standard);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: var(--space-12) var(--space-16);
+            font-size: var(--font-size-base);
+            color: var(--color-text);
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: var(--blur-glass);
+            -webkit-backdrop-filter: var(--blur-glass);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            transition: all var(--duration-normal) var(--ease-standard);
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 0 4px var(--color-focus-ring);
+        }
+
+        .tab {
+            padding: var(--space-12) var(--space-20);
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            transition: all var(--duration-normal) var(--ease-standard);
+            border-radius: var(--radius-base) var(--radius-base) 0 0;
+        }
+
+        .tab:hover {
+            color: var(--color-primary-hover);
+            background: var(--color-secondary);
+        }
+
+        .tab.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+            background: var(--color-secondary);
+        }
+
+        h1 {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-32);
+            color: var(--color-text);
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        .version-badge {
+            position: fixed;
+            bottom: var(--space-12);
+            right: var(--space-12);
+            padding: var(--space-4) var(--space-12);
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: var(--blur-glass);
+            -webkit-backdrop-filter: var(--blur-glass);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+            font-weight: var(--font-weight-medium);
+            box-shadow: var(--shadow-sm);
+            z-index: 998;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .flex-row {
+                flex-direction: column;
+            }
+
+            .toast {
+                right: var(--space-12);
+                left: var(--space-12);
+                bottom: var(--space-12);
+                max-width: none;
+            }
+
+            .version-badge {
+                bottom: var(--space-8);
+                right: var(--space-8);
+                font-size: 10px;
+                padding: var(--space-4) var(--space-8);
+            }
+
+            .tabs {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="version-badge">v0.1.9</div>
+    
+    <div class="container">
+        <h1>Küchendienst</h1>
+
+        <div class="tabs">
+            <button class="menu-toggle" onclick="toggleDropdown()">
+                <span id="current-tab-name">Personen</span>
+            </button>
+            <div class="dropdown-menu" id="dropdown-menu">
+                <button class="tab active" data-tab="personen" data-label="Personen">Personen</button>
+                <button class="tab" data-tab="betreuer" data-label="Betreuer">Betreuer</button>
+                <button class="tab" data-tab="strafdienste" data-label="Strafdienste">Strafdienste</button>
+                <button class="tab" data-tab="einteilung" data-label="Einteilung">Einteilung</button>
+                <button class="tab" data-tab="uebersicht" data-label="Übersicht">Übersicht</button>
+                <button class="tab" data-tab="statistik" data-label="Statistik">Statistik</button>
+                <button class="tab" data-tab="einstellungen" data-label="Einstellungen">Einstellungen</button>
+            </div>
+        </div>
+
+        <!-- Personen Tab -->
+        <div class="tab-content active" id="personen">
+            <div class="card">
+                <h2>Teilnehmer verwalten</h2>
+                <div class="form-group">
+                    <label for="person-name">Name der Person</label>
+                    <div class="flex-row">
+                        <input type="text" id="person-name" placeholder="Name eingeben">
+                        <button class="btn btn-primary" onclick="addPerson()">Teilnehmer hinzufügen</button>
+                    </div>
+                </div>
+                <div id="person-list" class="person-list"></div>
+            </div>
+        </div>
+
+        <!-- Betreuer Tab -->
+        <div class="tab-content" id="betreuer">
+            <div class="card">
+                <h2>Betreuer verwalten</h2>
+                <div class="form-group">
+                    <label for="supervisor-name">Name des Betreuers</label>
+                    <div class="flex-row">
+                        <input type="text" id="supervisor-name" placeholder="Name eingeben">
+                        <button class="btn btn-primary" onclick="addSupervisor()">Betreuer hinzufügen</button>
+                    </div>
+                </div>
+                <div id="supervisor-list" class="person-list"></div>
+            </div>
+        </div>
+
+        <!-- Strafdienste Tab -->
+        <div class="tab-content" id="strafdienste">
+            <div class="card">
+                <h2>Strafdienste vormerken</h2>
+                <div class="form-group">
+                    <label for="penalty-person">Person auswählen</label>
+                    <select id="penalty-person">
+                        <option value="">-- Person wählen --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="penalty-type">Strafdiensttyp</label>
+                    <select id="penalty-type">
+                        <option value="kochen">Straf-Kochdienst</option>
+                        <option value="putzen">Straf-Putzdienst</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="penalty-count">Anzahl Strafdienste</label>
+                    <input type="number" id="penalty-count" min="1" value="1">
+                </div>
+                <button class="btn btn-primary" onclick="addPenalty()">Strafdienst vormerken</button>
+                
+                <h3 style="margin-top: var(--space-24);">Vorgemerkte Strafdienste</h3>
+                <div id="penalty-list"></div>
+            </div>
+        </div>
+
+        <!-- Einteilung Tab -->
+        <div class="tab-content" id="einteilung">
+            <div class="card">
+                <h2>Dienste einteilen</h2>
+                
+                <div class="form-group">
+                    <label for="task-type">Dienst-Typ</label>
+                    <select id="task-type" onchange="updateTaskTypeUI()">
+                        <option value="kochen">Kochdienst</option>
+                        <option value="putzen">Putzdienst</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="person-count">Anzahl Personen</label>
+                    <input type="number" id="person-count" min="1" value="1">
+                </div>
+
+                <div id="supervisor-notice" style="display: none; padding: var(--space-12); background: var(--color-secondary); border-radius: var(--radius-base); margin-bottom: var(--space-16); font-size: var(--font-size-sm);">
+                    ℹ️ Ein Betreuer wird automatisch fair ausgewählt
+                </div>
+
+                <button class="btn btn-primary" onclick="assignTask()">Dienst zuweisen</button>
+            </div>
+        </div>
+
+        <!-- Übersicht Tab -->
+        <div class="tab-content" id="uebersicht">
+            <div class="card">
+                <h2>Einteilungen</h2>
+                <div class="form-group">
+                    <label for="overview-days">Zeitraum anzeigen</label>
+                    <select id="overview-days" onchange="renderOverview()">
+                        <option value="1">Heute</option>
+                        <option value="7">Letzte 7 Tage</option>
+                        <option value="14">Letzte 14 Tage</option>
+                        <option value="30">Letzte 30 Tage</option>
+                    </select>
+                </div>
+                <div id="overview-content"></div>
+            </div>
+        </div>
+
+        <!-- Statistik Tab -->
+        <div class="tab-content" id="statistik">
+            <div class="card">
+                <h2>Statistiken - Teilnehmer</h2>
+                <div id="stats-content" class="stats-grid"></div>
+            </div>
+            <div class="card">
+                <h2>Statistiken - Betreuer</h2>
+                <div id="supervisor-stats-content" class="stats-grid"></div>
+            </div>
+        </div>
+
+        <!-- Einstellungen Tab -->
+        <div class="tab-content" id="einstellungen">
+            <div class="card">
+                <h2>Einstellungen</h2>
+                <div class="form-group">
+                    <label for="max-tasks-per-day">Maximale Dienste pro Person/Tag</label>
+                    <input type="number" id="max-tasks-per-day" min="1" max="10" value="3">
+                    <small style="color: var(--color-text-secondary); display: block; margin-top: var(--space-4);">
+                        Verhindert, dass eine Person mehr als diese Anzahl Dienste an einem Tag zugeteilt bekommt
+                    </small>
+                </div>
+                <button class="btn btn-primary" onclick="saveSettings()">Einstellungen speichern</button>
+            </div>
+            
+            <div class="card">
+                <h2>Daten zurücksetzen</h2>
+                <p style="margin-bottom: var(--space-16); color: var(--color-text-secondary);">
+                    Achtung: Diese Aktionen können nicht rückgängig gemacht werden!
+                </p>
+                <button class="btn btn-secondary" onclick="resetStats()">Nur Statistiken zurücksetzen</button>
+                <button class="btn btn-secondary" onclick="resetAll()" style="margin-left: var(--space-8);">Alles zurücksetzen</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let people = [];
+        let supervisors = [];
+        let assignments = [];
+        let penalties = [];
+        let settings = { maxTasksPerDay: 3 };
+
+        function loadData() {
+            const savedPeople = JSON.parse(window.localStorage?.getItem('people') || '[]');
+            const savedSupervisors = JSON.parse(window.localStorage?.getItem('supervisors') || '[]');
+            const savedAssignments = JSON.parse(window.localStorage?.getItem('assignments') || '[]');
+            const savedPenalties = JSON.parse(window.localStorage?.getItem('penalties') || '[]');
+            const savedSettings = JSON.parse(window.localStorage?.getItem('settings') || '{"maxTasksPerDay":3}');
+            
+            people = savedPeople;
+            supervisors = savedSupervisors;
+            assignments = savedAssignments;
+            penalties = savedPenalties;
+            settings = savedSettings;
+            
+            document.getElementById('max-tasks-per-day').value = settings.maxTasksPerDay;
+            
+            renderPeople();
+            renderSupervisors();
+            renderPenalties();
+            renderOverview();
+            renderStats();
+            updatePenaltyPersonSelect();
+        }
+
+        function saveData() {
+            try {
+                window.localStorage?.setItem('people', JSON.stringify(people));
+                window.localStorage?.setItem('supervisors', JSON.stringify(supervisors));
+                window.localStorage?.setItem('assignments', JSON.stringify(assignments));
+                window.localStorage?.setItem('penalties', JSON.stringify(penalties));
+                window.localStorage?.setItem('settings', JSON.stringify(settings));
+            } catch (e) {
+                console.log('Data saved in memory only');
+            }
+        }
+
+        function addPerson() {
+            const nameInput = document.getElementById('person-name');
+            const name = nameInput.value.trim();
+            
+            if (!name) {
+                alert('Bitte einen Namen eingeben');
+                return;
+            }
+
+            if (people.some(p => p.name === name)) {
+                alert('Diese Person existiert bereits');
+                return;
+            }
+
+            people.push({
+                name: name,
+                kochen: 0,
+                putzen: 0
+            });
+
+            nameInput.value = '';
+            renderPeople();
+            updatePenaltyPersonSelect();
+            saveData();
+            showToast('✓', `${name} wurde als Teilnehmer hinzugefügt`, 'success');
+        }
+
+        function editPerson(oldName) {
+            const newName = prompt('Neuer Name:', oldName);
+            if (!newName || newName.trim() === '') return;
+            
+            const trimmedName = newName.trim();
+            if (trimmedName === oldName) return;
+            
+            if (people.some(p => p.name === trimmedName)) {
+                alert('Dieser Name existiert bereits');
+                return;
+            }
+
+            const person = people.find(p => p.name === oldName);
+            if (person) {
+                person.name = trimmedName;
+                assignments.forEach(a => {
+                    a.people = a.people.map(n => n === oldName ? trimmedName : n);
+                });
+                penalties.forEach(p => {
+                    if (p.person === oldName) p.person = trimmedName;
+                });
+                renderPeople();
+                renderPenalties();
+                renderOverview();
+                updatePenaltyPersonSelect();
+                saveData();
+            }
+        }
+
+        function removePerson(name) {
+            if (confirm(`${name} wirklich entfernen?`)) {
+                people = people.filter(p => p.name !== name);
+                penalties = penalties.filter(p => p.person !== name);
+                renderPeople();
+                renderPenalties();
+                updatePenaltyPersonSelect();
+                saveData();
+            }
+        }
+
+        function renderPeople() {
+            const container = document.getElementById('person-list');
+            
+            if (people.length === 0) {
+                container.innerHTML = '<div class="empty-state">Noch keine Teilnehmer hinzugefügt</div>';
+                return;
+            }
+
+            container.innerHTML = people.map(person => `
+                <div class="person-tag">
+                    <span ondblclick="editPerson('${person.name}')" style="cursor: pointer;" title="Doppelklick zum Bearbeiten">${person.name}</span>
+                    <button onclick="editPerson('${person.name}')" style="color: var(--color-primary); margin-right: var(--space-4);" title="Bearbeiten">✎</button>
+                    <button onclick="removePerson('${person.name}')">&times;</button>
+                </div>
+            `).join('');
+        }
+
+        function addSupervisor() {
+            const nameInput = document.getElementById('supervisor-name');
+            const name = nameInput.value.trim();
+            
+            if (!name) {
+                alert('Bitte einen Namen eingeben');
+                return;
+            }
+
+            if (supervisors.some(s => s.name === name)) {
+                alert('Dieser Betreuer existiert bereits');
+                return;
+            }
+
+            supervisors.push({
+                name: name,
+                putzen: 0
+            });
+
+            nameInput.value = '';
+            renderSupervisors();
+            saveData();
+            showToast('✓', `${name} wurde als Betreuer hinzugefügt`, 'success');
+        }
+
+        function editSupervisor(oldName) {
+            const newName = prompt('Neuer Name:', oldName);
+            if (!newName || newName.trim() === '') return;
+            
+            const trimmedName = newName.trim();
+            if (trimmedName === oldName) return;
+            
+            if (supervisors.some(s => s.name === trimmedName)) {
+                alert('Dieser Name existiert bereits');
+                return;
+            }
+
+            const supervisor = supervisors.find(s => s.name === oldName);
+            if (supervisor) {
+                supervisor.name = trimmedName;
+                assignments.forEach(a => {
+                    if (a.supervisor === oldName) a.supervisor = trimmedName;
+                });
+                renderSupervisors();
+                renderOverview();
+                saveData();
+            }
+        }
+
+        function removeSupervisor(name) {
+            if (confirm(`${name} wirklich entfernen?`)) {
+                supervisors = supervisors.filter(s => s.name !== name);
+                renderSupervisors();
+                saveData();
+            }
+        }
+
+        function renderSupervisors() {
+            const container = document.getElementById('supervisor-list');
+            
+            if (supervisors.length === 0) {
+                container.innerHTML = '<div class="empty-state">Noch keine Betreuer hinzugefügt</div>';
+                return;
+            }
+
+            container.innerHTML = supervisors.map(supervisor => `
+                <div class="person-tag">
+                    <span ondblclick="editSupervisor('${supervisor.name}')" style="cursor: pointer;" title="Doppelklick zum Bearbeiten">${supervisor.name}</span>
+                    <button onclick="editSupervisor('${supervisor.name}')" style="color: var(--color-primary); margin-right: var(--space-4);" title="Bearbeiten">✎</button>
+                    <button onclick="removeSupervisor('${supervisor.name}')">&times;</button>
+                </div>
+            `).join('');
+        }
+
+        function updatePenaltyPersonSelect() {
+            const select = document.getElementById('penalty-person');
+            select.innerHTML = '<option value="">-- Person wählen --</option>' +
+                people.map(p => `<option value="${p.name}">${p.name}</option>`).join('');
+        }
+
+        function addPenalty() {
+            const personName = document.getElementById('penalty-person').value;
+            const penaltyType = document.getElementById('penalty-type').value;
+            const penaltyCount = parseInt(document.getElementById('penalty-count').value);
+            
+            if (!personName) {
+                alert('Bitte eine Person auswählen');
+                return;
+            }
+
+            if (penaltyCount < 1) {
+                alert('Anzahl muss mindestens 1 sein');
+                return;
+            }
+
+            for (let i = 0; i < penaltyCount; i++) {
+                penalties.push({
+                    person: personName,
+                    type: penaltyType,
+                    added: new Date().toISOString()
+                });
+            }
+
+            document.getElementById('penalty-count').value = 1;
+            renderPenalties();
+            saveData();
+            const typeNames = {
+                'kochen': 'Straf-Kochdienst',
+                'putzen': 'Straf-Putzdienst'
+            };
+            showToast('⚠️', `${penaltyCount}x ${typeNames[penaltyType]} für ${personName} vorgemerkt`, 'success');
+        }
+
+        function removePenalty(index) {
+            if (confirm('Strafdienst wirklich entfernen?')) {
+                penalties.splice(index, 1);
+                renderPenalties();
+                saveData();
+            }
+        }
+
+        function renderPenalties() {
+            const container = document.getElementById('penalty-list');
+            
+            if (penalties.length === 0) {
+                container.innerHTML = '<div class="empty-state">Keine vorgemerkten Strafdienste</div>';
+                return;
+            }
+
+            const typeNames = {
+                'kochen': 'Straf-Kochdienst',
+                'putzen': 'Straf-Putzdienst'
+            };
+
+            container.innerHTML = penalties.map((penalty, index) => `
+                <div class="assignment-item">
+                    <div class="assignment-header">
+                        <span>${penalty.person}</span>
+                        <button class="btn btn-small btn-secondary" onclick="removePenalty(${index})">Entfernen</button>
+                    </div>
+                    <div style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">
+                        ${typeNames[penalty.type]}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateTaskTypeUI() {
+            const taskType = document.getElementById('task-type').value;
+            const supervisorNotice = document.getElementById('supervisor-notice');
+            supervisorNotice.style.display = taskType === 'putzen' ? 'block' : 'none';
+        }
+
+        function assignTask() {
+            if (people.length === 0) {
+                alert('Bitte erst Teilnehmer hinzufügen');
+                return;
+            }
+
+            const taskType = document.getElementById('task-type').value;
+            const personCount = parseInt(document.getElementById('person-count').value);
+
+            if (personCount < 1) {
+                alert('Anzahl muss mindestens 1 sein');
+                return;
+            }
+
+            const today = new Date().toISOString().split('T')[0];
+            const selectedPeople = selectPeopleForTask(taskType, personCount, today);
+            
+            if (!selectedPeople || selectedPeople.length < personCount) {
+                alert(`Nicht genug verfügbare Personen (Tageslimit oder zu wenig Personen)`);
+                return;
+            }
+
+            const assignment = {
+                date: today,
+                time: new Date().toLocaleTimeString('de-DE', {hour: '2-digit', minute: '2-digit'}),
+                type: taskType,
+                people: selectedPeople.map(p => p.name),
+                supervisor: null
+            };
+
+            if (taskType === 'putzen') {
+                const supervisor = selectSupervisor(today);
+                if (!supervisor) {
+                    alert('Kein Betreuer verfügbar. Bitte erst Betreuer hinzufügen.');
+                    return;
+                }
+                assignment.supervisor = supervisor.name;
+                supervisor.putzen++;
+            }
+
+            assignments.push(assignment);
+
+            selectedPeople.forEach(person => {
+                const p = people.find(pe => pe.name === person.name);
+                if (taskType === 'kochen') p.kochen++;
+                else if (taskType === 'putzen') p.putzen++;
+            });
+
+            saveData();
+            renderOverview();
+            renderStats();
+            
+            let message = `${selectedPeople.map(p => p.name).join(', ')}`;
+            if (assignment.supervisor) {
+                message += ` • Betreuer: ${assignment.supervisor}`;
+            }
+            showToast('✓', `Dienst zugewiesen: ${message}`, 'success');
+        }
+
+        function selectPeopleForTask(taskType, count, date) {
+            const statKey = taskType;
+            const todayAssignments = assignments.filter(a => a.date === date);
+            
+            let availablePeople = people.filter(person => {
+                const todayCount = todayAssignments.filter(a => 
+                    a.people.includes(person.name)
+                ).length;
+                return todayCount < settings.maxTasksPerDay;
+            });
+
+            const penaltiesForType = penalties.filter(p => p.type === taskType);
+            
+            if (penaltiesForType.length > 0) {
+                const yesterday = new Date(date);
+                yesterday.setDate(yesterday.getDate() - 1);
+                const yesterdayStr = yesterday.toISOString().split('T')[0];
+                const yesterdayAssignments = assignments.filter(a => a.date === yesterdayStr);
+                const yesterdayPenaltyPeople = yesterdayAssignments
+                    .filter(a => a.type === taskType)
+                    .flatMap(a => a.people);
+
+                const penaltyPeople = penaltiesForType
+                    .filter(p => !yesterdayPenaltyPeople.includes(p.person))
+                    .map(p => availablePeople.find(person => person.name === p.person))
+                    .filter(p => p !== undefined);
+                
+                if (penaltyPeople.length > 0) {
+                    const selectedPenalty = penaltyPeople[0];
+                    const penaltyIndex = penalties.findIndex(p => 
+                        p.person === selectedPenalty.name && p.type === taskType
+                    );
+                    if (penaltyIndex !== -1) {
+                        penalties.splice(penaltyIndex, 1);
+                        renderPenalties();
+                        saveData();
+                    }
+                    
+                    if (count === 1) {
+                        return [selectedPenalty];
+                    } else {
+                        availablePeople = availablePeople.filter(p => p.name !== selectedPenalty.name);
+                        const sortedRest = availablePeople.sort((a, b) => a[statKey] - b[statKey]);
+                        return [selectedPenalty, ...sortedRest.slice(0, count - 1)];
+                    }
+                }
+            }
+
+            const sortedPeople = availablePeople.sort((a, b) => a[statKey] - b[statKey]);
+            return sortedPeople.slice(0, count);
+        }
+
+        function selectSupervisor(date) {
+            if (supervisors.length === 0) return null;
+            
+            const todayAssignments = assignments.filter(a => a.date === date && a.supervisor);
+            const usedSupervisors = todayAssignments.map(a => a.supervisor);
+            
+            const availableSupervisors = supervisors.filter(s => !usedSupervisors.includes(s.name));
+            
+            const poolToUse = availableSupervisors.length > 0 ? availableSupervisors : supervisors;
+            const sorted = [...poolToUse].sort((a, b) => a.putzen - b.putzen);
+            
+            return sorted[0];
+        }
+
+        function renderOverview() {
+            const container = document.getElementById('overview-content');
+            const daysToShow = parseInt(document.getElementById('overview-days').value);
+            const today = new Date();
+            const startDate = new Date(today);
+            startDate.setDate(startDate.getDate() - (daysToShow - 1));
+
+            const relevantAssignments = assignments.filter(a => {
+                const assignmentDate = new Date(a.date);
+                return assignmentDate >= startDate && assignmentDate <= today;
+            });
+
+            if (relevantAssignments.length === 0) {
+                container.innerHTML = '<div class="empty-state">Keine Einteilungen im gewählten Zeitraum</div>';
+                return;
+            }
+
+            const typeNames = {
+                'kochen': 'Kochdienst',
+                'putzen': 'Putzdienst'
+            };
+
+            const groupedByDate = {};
+            relevantAssignments.forEach(a => {
+                if (!groupedByDate[a.date]) {
+                    groupedByDate[a.date] = [];
+                }
+                groupedByDate[a.date].push(a);
+            });
+
+            const sortedDates = Object.keys(groupedByDate).sort().reverse();
+
+            container.innerHTML = sortedDates.map(date => {
+                const dateObj = new Date(date);
+                const isToday = date === today.toISOString().split('T')[0];
+                const dateLabel = isToday ? 'Heute' : dateObj.toLocaleDateString('de-DE', { 
+                    weekday: 'short', 
+                    day: '2-digit', 
+                    month: '2-digit',
+                    year: 'numeric'
+                });
+
+                return `
+                    <div class="day-header">${dateLabel}</div>
+                    ${groupedByDate[date].map(assignment => `
+                        <div class="assignment-item">
+                            <div class="assignment-header">
+                                <span class="assignment-type">${typeNames[assignment.type]}</span>
+                                <span style="color: var(--color-text-secondary); font-size: var(--font-size-sm);">${assignment.time}</span>
+                            </div>
+                            <div class="assignment-people">
+                                ${assignment.people.map(name => `<span class="person-tag">${name}</span>`).join('')}
+                            </div>
+                            ${assignment.supervisor ? `
+                                <div style="margin-top: var(--space-8); font-size: var(--font-size-sm); color: var(--color-text-secondary);">
+                                    👤 Betreuer: ${assignment.supervisor}
+                                </div>
+                            ` : ''}
+                        </div>
+                    `).join('')}
+                `;
+            }).join('');
+        }
+
+        function renderStats() {
+            const container = document.getElementById('stats-content');
+
+            if (people.length === 0) {
+                container.innerHTML = '<div class="empty-state">Keine Statistiken verfügbar</div>';
+                return;
+            }
+
+            container.innerHTML = people.map(person => {
+                const total = person.kochen + person.putzen;
+                const pendingPenalties = penalties.filter(p => p.person === person.name);
+                
+                return `
+                    <div class="stat-card">
+                        <div class="stat-name">${person.name}</div>
+                        <div class="stat-item">
+                            <span>Kochdienste:</span>
+                            <span class="stat-value">${person.kochen}</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>Putzdienste:</span>
+                            <span class="stat-value">${person.putzen}</span>
+                        </div>
+                        ${pendingPenalties.length > 0 ? `
+                            <div class="stat-item" style="color: var(--color-warning);">
+                                <span>Offene Strafdienste:</span>
+                                <span class="stat-value">${pendingPenalties.length}</span>
+                            </div>
+                        ` : ''}
+                        <div class="stat-item" style="margin-top: var(--space-8); padding-top: var(--space-8); border-top: 1px solid var(--color-border);">
+                            <span><strong>Gesamt:</strong></span>
+                            <span class="stat-value"><strong>${total}</strong></span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const supervisorContainer = document.getElementById('supervisor-stats-content');
+
+            if (supervisors.length === 0) {
+                supervisorContainer.innerHTML = '<div class="empty-state">Keine Betreuer-Statistiken verfügbar</div>';
+                return;
+            }
+
+            supervisorContainer.innerHTML = supervisors.map(supervisor => {
+                return `
+                    <div class="stat-card">
+                        <div class="stat-name">${supervisor.name}</div>
+                        <div class="stat-item">
+                            <span>Putzdienste betreut:</span>
+                            <span class="stat-value">${supervisor.putzen}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function saveSettings() {
+            const newMaxTasks = parseInt(document.getElementById('max-tasks-per-day').value);
+            if (newMaxTasks < 1 || newMaxTasks > 10) {
+                alert('Bitte einen Wert zwischen 1 und 10 eingeben');
+                return;
+            }
+            settings.maxTasksPerDay = newMaxTasks;
+            saveData();
+            showToast('✓', 'Einstellungen gespeichert', 'success');
+        }
+
+        function resetStats() {
+            if (!confirm('Wirklich alle Statistiken zurücksetzen? Die Einteilungen bleiben erhalten.')) return;
+            
+            people.forEach(p => {
+                p.kochen = 0;
+                p.putzen = 0;
+            });
+            supervisors.forEach(s => {
+                s.putzen = 0;
+            });
+            
+            renderStats();
+            saveData();
+            showToast('✓', 'Statistiken zurückgesetzt', 'success');
+        }
+
+        function showToast(icon, message, type = 'success') {
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span class="toast-icon">${icon}</span>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s var(--ease-standard)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function resetAll() {
+            if (!confirm('ACHTUNG: Wirklich ALLE Daten löschen? Dies kann nicht rückgängig gemacht werden!')) return;
+            
+            people = [];
+            supervisors = [];
+            assignments = [];
+            penalties = [];
+            settings = { maxTasksPerDay: 3 };
+            
+            saveData();
+            renderPeople();
+            renderSupervisors();
+            renderPenalties();
+            renderOverview();
+            renderStats();
+            updatePenaltyPersonSelect();
+            
+            showToast('✓', 'Alle Daten wurden gelöscht', 'success');
+        }
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown-menu');
+            const toggle = document.querySelector('.menu-toggle');
+            dropdown.classList.toggle('open');
+            toggle.classList.toggle('open');
+        }
+
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                const tabLabel = tab.getAttribute('data-label');
+                document.getElementById(tabId).classList.add('active');
+                document.getElementById('current-tab-name').textContent = tabLabel;
+                
+                toggleDropdown();
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            const dropdown = document.getElementById('dropdown-menu');
+            const toggle = document.querySelector('.menu-toggle');
+            if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
+                dropdown.classList.remove('open');
+                toggle.classList.remove('open');
+            }
+        });
+
+        loadData();
+        updateTaskTypeUI();
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                const swCode = `
+                    const CACHE_NAME = 'kuechendienst-v0-1-9';
+                    const urlsToCache = ['./', 'index.html'];
+                    
+                    self.addEventListener('install', event => {
+                        event.waitUntil(
+                            caches.open(CACHE_NAME)
+                                .then(cache => cache.addAll(urlsToCache))
+                        );
+                    });
+                    
+                    self.addEventListener('fetch', event => {
+                        event.respondWith(
+                            caches.match(event.request)
+                                .then(response => response || fetch(event.request))
+                        );
+                    });
+                    
+                    self.addEventListener('activate', event => {
+                        event.waitUntil(
+                            caches.keys().then(cacheNames => {
+                                return Promise.all(
+                                    cacheNames.map(cacheName => {
+                                        if (cacheName !== CACHE_NAME) {
+                                            return caches.delete(cacheName);
+                                        }
+                                    })
+                                );
+                            })
+                        );
+                    });
+                `;
+                
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                const swUrl = URL.createObjectURL(blob);
+                
+                navigator.serviceWorker.register(swUrl)
+                    .then(reg => console.log('Service Worker registriert'))
+                    .catch(err => console.log('Service Worker Fehler:', err));
+            });
+        }
+    </script>
+</body>
+</html>
