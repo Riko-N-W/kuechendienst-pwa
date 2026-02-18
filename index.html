@@ -137,28 +137,47 @@
         .menu-toggle {
             display: none;
             padding: var(--space-12) var(--space-20);
-            background: var(--color-secondary);
-            border: none;
+            background: var(--color-surface);
+            backdrop-filter: var(--blur-glass);
+            -webkit-backdrop-filter: var(--blur-glass);
+            border: 1px solid var(--color-border);
             border-radius: var(--radius-base);
             color: var(--color-text);
             cursor: pointer;
             font-size: var(--font-size-base);
             font-weight: var(--font-weight-medium);
             transition: all var(--duration-normal) var(--ease-standard);
+            box-shadow: var(--shadow-sm);
         }
 
         .menu-toggle:hover {
             background: var(--color-secondary-hover);
         }
 
-        .menu-toggle::after {
-            content: ' ▼';
-            font-size: var(--font-size-xs);
-            margin-left: var(--space-8);
+        .menu-toggle::before {
+            content: '☰';
+            font-size: var(--font-size-xl);
+            margin-right: var(--space-8);
         }
 
-        .menu-toggle.open::after {
-            content: ' ▲';
+        .menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 9998;
+            opacity: 0;
+            transition: opacity var(--duration-normal) var(--ease-standard);
+        }
+
+        .menu-overlay.open {
+            display: block;
+            opacity: 1;
         }
 
         .dropdown-menu {
@@ -172,76 +191,95 @@
 
         @media (max-width: 768px) {
             .menu-toggle {
-                display: block;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 width: 100%;
             }
 
             .dropdown-menu {
-                display: none;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 85%;
-                max-width: 400px;
-                flex-direction: column;
-                background: rgba(255, 255, 255, 0.85);
-                backdrop-filter: blur(20px) saturate(180%);
-                -webkit-backdrop-filter: blur(20px) saturate(180%);
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                border-radius: var(--radius-lg);
-                padding: var(--space-16);
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
-                z-index: 9999;
-                animation: bubbleIn 0.3s var(--ease-standard);
-            }
-
-            @keyframes bubbleIn {
-                from {
-                    transform: translate(-50%, -50%) scale(0.8);
-                    opacity: 0;
-                }
-                to {
-                    transform: translate(-50%, -50%) scale(1);
-                    opacity: 1;
-                }
-            }
-
-            .dropdown-menu::before {
-                content: '';
                 position: fixed;
                 top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0, 0, 0, 0.4);
-                z-index: -1;
-                backdrop-filter: blur(4px);
-                -webkit-backdrop-filter: blur(4px);
+                left: -100%;
+                width: 80%;
+                max-width: 320px;
+                height: 100vh;
+                flex-direction: column;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(20px) saturate(180%);
+                -webkit-backdrop-filter: blur(20px) saturate(180%);
+                border-right: 1px solid var(--color-border);
+                padding: var(--space-20);
+                padding-top: calc(var(--space-20) + env(safe-area-inset-top));
+                padding-bottom: calc(var(--space-20) + env(safe-area-inset-bottom));
+                box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+                z-index: 9999;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                transition: left 0.3s var(--ease-standard);
             }
 
             .dropdown-menu.open {
+                left: 0;
                 display: flex;
+            }
+
+            .menu-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: var(--space-24);
+                padding-bottom: var(--space-16);
+                border-bottom: 2px solid var(--color-border);
+            }
+
+            .menu-title {
+                font-size: var(--font-size-xl);
+                font-weight: var(--font-weight-bold);
+                color: var(--color-primary);
+            }
+
+            .menu-close {
+                background: none;
+                border: none;
+                font-size: var(--font-size-2xl);
+                color: var(--color-text-secondary);
+                cursor: pointer;
+                padding: var(--space-4);
+                line-height: 1;
+                transition: all var(--duration-fast) var(--ease-standard);
+            }
+
+            .menu-close:hover {
+                color: var(--color-text);
+                transform: rotate(90deg);
             }
 
             .tab {
                 width: 100%;
                 text-align: left;
-                border-bottom: none;
+                border: none;
                 border-left: 3px solid transparent;
                 padding: var(--space-16) var(--space-20);
-                margin-bottom: var(--space-4);
+                margin-bottom: var(--space-6);
                 border-radius: var(--radius-base);
+                background: transparent;
+                transition: all var(--duration-fast) var(--ease-standard);
+                font-size: var(--font-size-lg);
             }
 
             .tab.active {
-                border-bottom: none;
                 border-left-color: var(--color-primary);
                 background: var(--color-secondary);
+                color: var(--color-primary);
             }
 
             .tab:hover {
                 background: var(--color-secondary-hover);
+            }
+
+            .tab:active {
+                transform: scale(0.98);
             }
         }
 
@@ -764,14 +802,19 @@
             <button class="menu-toggle" onclick="toggleDropdown()">
                 <span id="current-tab-name">Personen</span>
             </button>
+            <div class="menu-overlay" id="menu-overlay" onclick="closeMenu()"></div>
             <div class="dropdown-menu" id="dropdown-menu">
-                <button class="tab active" data-tab="personen" data-label="Personen">Personen</button>
-                <button class="tab" data-tab="betreuer" data-label="Betreuer">Betreuer</button>
-                <button class="tab" data-tab="strafdienste" data-label="Strafdienste">Strafdienste</button>
-                <button class="tab" data-tab="einteilung" data-label="Einteilung">Einteilung</button>
-                <button class="tab" data-tab="uebersicht" data-label="Übersicht">Übersicht</button>
-                <button class="tab" data-tab="statistik" data-label="Statistik">Statistik</button>
-                <button class="tab" data-tab="einstellungen" data-label="Einstellungen">Einstellungen</button>
+                <div class="menu-header">
+                    <span class="menu-title">Menü</span>
+                    <button class="menu-close" onclick="closeMenu()">&times;</button>
+                </div>
+                <button class="tab active" data-tab="personen" data-label="Personen">👥 Personen</button>
+                <button class="tab" data-tab="betreuer" data-label="Betreuer">👨‍🏫 Betreuer</button>
+                <button class="tab" data-tab="strafdienste" data-label="Strafdienste">⚠️ Strafdienste</button>
+                <button class="tab" data-tab="einteilung" data-label="Einteilung">📋 Einteilung</button>
+                <button class="tab" data-tab="uebersicht" data-label="Übersicht">📊 Übersicht</button>
+                <button class="tab" data-tab="statistik" data-label="Statistik">📈 Statistik</button>
+                <button class="tab" data-tab="einstellungen" data-label="Einstellungen">⚙️ Einstellungen</button>
             </div>
         </div>
 
@@ -1508,9 +1551,18 @@
 
         function toggleDropdown() {
             const dropdown = document.getElementById('dropdown-menu');
-            const toggle = document.querySelector('.menu-toggle');
+            const overlay = document.getElementById('menu-overlay');
             dropdown.classList.toggle('open');
-            toggle.classList.toggle('open');
+            overlay.classList.toggle('open');
+            document.body.style.overflow = dropdown.classList.contains('open') ? 'hidden' : '';
+        }
+
+        function closeMenu() {
+            const dropdown = document.getElementById('dropdown-menu');
+            const overlay = document.getElementById('menu-overlay');
+            dropdown.classList.remove('open');
+            overlay.classList.remove('open');
+            document.body.style.overflow = '';
         }
 
         document.querySelectorAll('.tab').forEach(tab => {
@@ -1524,16 +1576,16 @@
                 document.getElementById(tabId).classList.add('active');
                 document.getElementById('current-tab-name').textContent = tabLabel;
                 
-                toggleDropdown();
+                closeMenu();
             });
         });
 
         document.addEventListener('click', (e) => {
             const dropdown = document.getElementById('dropdown-menu');
             const toggle = document.querySelector('.menu-toggle');
-            if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
-                dropdown.classList.remove('open');
-                toggle.classList.remove('open');
+            const overlay = document.getElementById('menu-overlay');
+            if (!dropdown.contains(e.target) && !toggle.contains(e.target) && !overlay.contains(e.target)) {
+                closeMenu();
             }
         });
 
