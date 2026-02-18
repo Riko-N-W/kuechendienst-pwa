@@ -170,7 +170,7 @@
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
-            z-index: 9998;
+            z-index: 99998;
             opacity: 0;
             transition: opacity var(--duration-normal) var(--ease-standard);
         }
@@ -213,7 +213,7 @@
                 padding-top: calc(var(--space-20) + env(safe-area-inset-top));
                 padding-bottom: calc(var(--space-20) + env(safe-area-inset-bottom));
                 box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
-                z-index: 9999;
+                z-index: 99999;
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
                 transition: left 0.3s var(--ease-standard);
@@ -508,7 +508,7 @@
             align-items: center;
             gap: var(--space-12);
             animation: slideIn 0.3s var(--ease-standard);
-            z-index: 1000;
+            z-index: 99000;
             max-width: 400px;
         }
 
@@ -716,6 +716,18 @@
             z-index: 998;
             pointer-events: none;
             opacity: 0.7;
+        }
+
+        .toast {
+            z-index: 99000;
+        }
+
+        .card,
+        .tab-content,
+        .container,
+        body > * {
+            position: relative;
+            z-index: 1;
         }
 
         @media (max-width: 768px) {
@@ -980,6 +992,16 @@
         let settings = { maxTasksPerDay: 3 };
         let isAuthenticated = false;
         let isAdmin = false;
+        let userPasswordHash = null;
+        let adminPasswordHash = null;
+
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
 
         function checkAuth() {
             const authStatus = sessionStorage.getItem('auth');
@@ -1010,16 +1032,29 @@
             document.getElementById('login-password').focus();
         }
 
-        window.attemptLogin = function() {
+        window.attemptLogin = async function() {
             const password = document.getElementById('login-password').value;
             const errorDiv = document.getElementById('login-error');
             
-            if (password === '1952') {
+            if (!password) {
+                errorDiv.textContent = 'Bitte Passwort eingeben';
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            const passwordHash = await hashPassword(password);
+
+            if (!userPasswordHash || !adminPasswordHash) {
+                userPasswordHash = await hashPassword('1952');
+                adminPasswordHash = await hashPassword('03051999');
+            }
+            
+            if (passwordHash === userPasswordHash) {
                 sessionStorage.setItem('auth', 'true');
                 isAuthenticated = true;
                 document.querySelector('[style*="z-index: 10000"]').remove();
                 loadData();
-            } else if (password === '03051999') {
+            } else if (passwordHash === adminPasswordHash) {
                 sessionStorage.setItem('auth', 'true');
                 sessionStorage.setItem('admin', 'true');
                 isAuthenticated = true;
@@ -1028,17 +1063,18 @@
                 loadData();
                 showToast('👑', 'Als Administrator angemeldet', 'success');
             } else {
+                errorDiv.textContent = 'Falsches Passwort';
                 errorDiv.style.display = 'block';
                 document.getElementById('login-password').value = '';
                 document.getElementById('login-password').focus();
             }
         };
 
-        function loadData() {
+        async function loadData() {
             if (!checkAuth()) return;
             
             const dataRef = ref(database, 'kuechendienst');
-            onValue(dataRef, (snapshot) => {
+            onValue(dataRef, async (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
                     people = data.people || [];
@@ -1046,6 +1082,19 @@
                     assignments = data.assignments || [];
                     penalties = data.penalties || [];
                     settings = data.settings || { maxTasksPerDay: 3 };
+                    
+                    if (data.config) {
+                        userPasswordHash = data.config.userPasswordHash || await hashPassword('1952');
+                        adminPasswordHash = data.config.adminPasswordHash || await hashPassword('03051999');
+                    } else {
+                        userPasswordHash = await hashPassword('1952');
+                        adminPasswordHash = await hashPassword('03051999');
+                        const configRef = ref(database, 'kuechendienst/config');
+                        set(configRef, {
+                            userPasswordHash: userPasswordHash,
+                            adminPasswordHash: adminPasswordHash
+                        });
+                    }
                 } else {
                     const savedPeople = JSON.parse(window.localStorage?.getItem('people') || '[]');
                     const savedSupervisors = JSON.parse(window.localStorage?.getItem('supervisors') || '[]');
@@ -1124,20 +1173,24 @@
             }
         }
 
-        window.changePassword = function() {
+        window.changePassword = async function() {
             const newPassword = prompt('Neues Benutzer-Passwort eingeben:');
             if (newPassword && newPassword.trim()) {
-                const passwordRef = ref(database, 'kuechendienst/config/userPassword');
-                set(passwordRef, newPassword.trim());
+                const newHash = await hashPassword(newPassword.trim());
+                const passwordRef = ref(database, 'kuechendienst/config/userPasswordHash');
+                await set(passwordRef, newHash);
+                userPasswordHash = newHash;
                 showToast('✓', 'Benutzer-Passwort geändert', 'success');
             }
         };
 
-        window.changeAdminPassword = function() {
+        window.changeAdminPassword = async function() {
             const newPassword = prompt('Neues Administrator-Passwort eingeben:');
             if (newPassword && newPassword.trim()) {
-                const passwordRef = ref(database, 'kuechendienst/config/adminPassword');
-                set(passwordRef, newPassword.trim());
+                const newHash = await hashPassword(newPassword.trim());
+                const passwordRef = ref(database, 'kuechendienst/config/adminPasswordHash');
+                await set(passwordRef, newHash);
+                adminPasswordHash = newHash;
                 showToast('✓', 'Admin-Passwort geändert', 'success');
             }
         };
