@@ -14,9 +14,9 @@
     <title>Küchendienst</title>
     <style>
         :root {
-            --color-beige-50: rgba(250, 248, 245, 1);
-            --color-beige-100: rgba(245, 242, 237, 1);
-            --color-beige-200: rgba(235, 230, 222, 1);
+            --color-beige-50: rgba(240, 237, 232, 1);
+            --color-beige-100: rgba(235, 231, 224, 1);
+            --color-beige-200: rgba(225, 220, 212, 1);
             --color-sage-400: rgba(130, 147, 135, 1);
             --color-sage-500: rgba(106, 124, 111, 1);
             --color-sage-600: rgba(88, 105, 93, 1);
@@ -185,14 +185,14 @@
                 width: 85%;
                 max-width: 400px;
                 flex-direction: column;
-                background: var(--color-surface);
-                backdrop-filter: var(--blur-glass);
-                -webkit-backdrop-filter: var(--blur-glass);
-                border: 1px solid var(--color-border);
+                background: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(20px) saturate(180%);
+                -webkit-backdrop-filter: blur(20px) saturate(180%);
+                border: 1px solid rgba(255, 255, 255, 0.3);
                 border-radius: var(--radius-lg);
                 padding: var(--space-16);
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-                z-index: 1000;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+                z-index: 9999;
                 animation: bubbleIn 0.3s var(--ease-standard);
             }
 
@@ -216,6 +216,8 @@
                 bottom: 0;
                 background: rgba(0, 0, 0, 0.4);
                 z-index: -1;
+                backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
             }
 
             .dropdown-menu.open {
